@@ -1,125 +1,174 @@
 import 'package:flutter/material.dart';
-
+import 'ResultPage.dart';
+import 'MCQ.dart';
+import 'StartScreen.dart';
+import 'quiz.dart';
 void main() {
-  runApp(const MyApp());
+  runApp(const App());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+class App extends StatefulWidget {
+  const App({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<App> createState() => _AppState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
+class _AppState extends State<App> {
+  int _state = 1;
+  void _toggle(int val) {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      _state = val;
     });
   }
 
+  Map<int, int> map = {};
+  void _answerQuestion(int key, int val) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        map[key] = val;
+      });
+    });
+  }
+
+  List<MCQ> mcqs = [
+    MCQ(
+      id: 1,
+      question: "What is the primary purpose of React?",
+      options: [
+        "a) To handle routing in single-page applications",
+        "b) To create server-side applications",
+        "c) To build user interfaces, especially for single-page applications",
+        "d) To manage databases in web applications",
+      ],
+      correctOptionIndex: 2,
+    ),
+    MCQ(
+      id: 2,
+      question: "Which of the following is true about JSX?",
+      options: [
+        "a) It is a separate language that must be compiled into JavaScript",
+        "b) It is a syntax extension that allows writing HTML within JavaScript",
+        "c) It is used to write backend server code",
+        "d) It is a CSS preprocessor used in React applications",
+      ],
+      correctOptionIndex: 1,
+    ),
+    MCQ(
+      id: 3,
+      question:
+          "Which method in the React.Component lifecycle is called after the component is rendered for the first time?",
+      options: [
+        "a) componentWillMount",
+        "b) componentDidMount",
+        "c) componentWillUpdate",
+        "d) componentDidUpdate",
+      ],
+      correctOptionIndex: 1,
+    ),
+    MCQ(
+      id: 4,
+      question: "How do you pass data to a React component?",
+      options: [
+        "a) Using components",
+        "b) Using props",
+        "c) Using state",
+        "d) Using lifecycle methods",
+      ],
+      correctOptionIndex: 1,
+    ),
+    MCQ(
+      id: 5,
+      question: "What is the purpose of the `key` prop in React?",
+      options: [
+        "a) To uniquely identify elements in an array for performance optimization",
+        "b) To pass data between components",
+        "c) To handle event handlers",
+        "d) To define styles for components",
+      ],
+      correctOptionIndex: 0,
+    ),
+    MCQ(
+      id: 6,
+      question:
+          "Which of the following hooks is used to handle side effects in functional components?",
+      options: [
+        "a) useState",
+        "b) useReducer",
+        "c) useEffect",
+        "d) useContext",
+      ],
+      correctOptionIndex: 2,
+    ),
+    MCQ(
+      id: 7,
+      question: "What is the virtual DOM in React?",
+      options: [
+        "a) A direct representation of the real DOM",
+        "b) A lightweight copy of the real DOM that is kept in memory and synced with the real DOM by React",
+        "c) A new browser feature used by React to improve performance",
+        "d) A special API provided by React to handle asynchronous operations",
+      ],
+      correctOptionIndex: 1,
+    ),
+    MCQ(
+      id: 8,
+      question: "How can you create a functional component in React?",
+      options: [
+        "a) class MyComponent extends React.Component { render() { return <div>Hello</div>; }}",
+        "b) function MyComponent() { return <div>Hello</div>; }",
+        "c) const MyComponent = React.createComponent({ render() { return <div>Hello</div>; }});",
+        "d) const MyComponent = createComponent({ render() { return <div>Hello</div>; }});",
+      ],
+      correctOptionIndex: 1,
+    ),
+    MCQ(
+      id: 9,
+      question: "What is the correct way to update state in a React component?",
+      options: [
+        "a) this.state = { key: value }",
+        "b) this.setState({ key: value })",
+        "c) this.updateState({ key: value })",
+        "d) this.changeState({ key: value })",
+      ],
+      correctOptionIndex: 1,
+    ),
+    MCQ(
+      id: 10,
+      question:
+          "What is the significance of the `defaultValue` attribute in a React `<input>` element?",
+      options: [
+        "a) It sets the initial value of an uncontrolled component",
+        "b) It sets the value of a controlled component",
+        "c) It provides a placeholder for the input",
+        "d) It handles the form submission event",
+      ],
+      correctOptionIndex: 0,
+    ),
+  ];
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      home: Scaffold(
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        body: _state == 1
+            ? StartScreen(
+                toggle: _toggle,
+              )
+            : _state == 2
+                ? SurveyPage(
+                    mcqs: mcqs,
+                    answerQuestion: _answerQuestion,
+                    toggle: _toggle,
+                  )
+                : ResultPage(
+                    toggle: _toggle,
+                    map: map,
+                    mcqs: mcqs,
+                  ),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
